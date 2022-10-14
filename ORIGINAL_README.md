@@ -8,7 +8,7 @@ see the progression from the 1 generation to generation 4500 below.
 
 The final result after 5000 generations you can check out below
 
-![Final result after 5000 generations](./starry_night/drawing_05000.png)
+![Final result after 5000 generations](banksy/drawing_05000.png)
 
 Note that running this code will take a long time, all 5000 generations took about 10 hours on my machine.
 
@@ -41,6 +41,6 @@ routine.
 
 ```python
     target_image_path = "./img/starry_night_half.jpg"
-    checkpoint_path = "./starry_night/"
+checkpoint_path = "banksy/"
 ```
 

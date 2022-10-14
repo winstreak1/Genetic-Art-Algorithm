@@ -19,7 +19,7 @@ def score(x: Painting) -> float:
     print(".", end='', flush=True)
     return current_score
 
-
+#random selection of colors
 def pick_best_and_random(pop, maximize=False):
     """
     Here we select the best individual from a population and pair it with a random individual from a population
@@ -36,7 +36,7 @@ def pick_best_and_random(pop, maximize=False):
     dad = random.choice(pop)
     return mom, dad
 
-
+#mutation of colors from previous image
 def mutate_painting(x: Painting, rate=0.04, swap=0.5, sigma=1) -> Painting:
     """
     This will mutate a painting by randomly applying changes to the triangles.
@@ -50,7 +50,7 @@ def mutate_painting(x: Painting, rate=0.04, swap=0.5, sigma=1) -> Painting:
     x.mutate_triangles(rate=rate, swap=swap, sigma=sigma)
     return deepcopy(x)
 
-
+#function to output the mutation to a new image
 def mate(mom: Painting, dad: Painting):
     """
     Takes two paintings, the mom and dad, to create a new painting object made up with triangles from both parents
@@ -63,7 +63,7 @@ def mate(mom: Painting, dad: Painting):
 
     return deepcopy(child_a)
 
-
+#summary of results printed
 def print_summary(pop, img_template="output%d.png", checkpoint_path="output") -> Population:
     """
     This will print a summary of the population fitness and store an image of the best individual of the current
@@ -90,7 +90,7 @@ def print_summary(pop, img_template="output%d.png", checkpoint_path="output") ->
 
 if __name__ == "__main__":
     target_image_path = "./img/starry_night_half.jpg"
-    checkpoint_path = "./starry_night/"
+    checkpoint_path = "banksy/"
     image_template = os.path.join(checkpoint_path, "drawing_%05d.png")
     target_image = Image.open(target_image_path).convert('RGBA')
 

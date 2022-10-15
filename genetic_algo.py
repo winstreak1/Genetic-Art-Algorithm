@@ -3,16 +3,16 @@ from evol import Evolution, Population
 import random
 import os
 from copy import deepcopy
-from painting import Painting
+from NatSelect import Color_Fill
 
-#function that measures difference from previous to current image as a score
-def score(x: Painting) -> float:
-    current_score = x.image_diff(x.target_image)
+# FITNESS function that measures difference from previous to current image as a score
+def fitness(x: Color_Fill) -> float:
+    current_fitness = x.image_diff(x.target_image)
     print(".", end='', flush=True)
-    return current_score
+    return current_fitness
 
-#function that selectively guesses new color based on previous guesses
-def random_best(pop, maximize=False):
+#SELECTION function that selectively guesses new Color_Fill based on previous guesses
+def selection(pop, maximize=False):
     evaluated_individuals = tuple(filter(lambda x: x.fitness is not None, pop))
     if len(evaluated_individuals) > 0:
         maternal = max(evaluated_individuals, key=lambda x: x.fitness if maximize else -x.fitness)
@@ -21,20 +21,22 @@ def random_best(pop, maximize=False):
     paternal = random.choice(pop)
     return maternal, paternal
 
-#function to randomly select inheritance of color to either maternal or paternal
+#function to randomly select inheritance of Color_Fill to either maternal or paternal
 def choose_random(pop):
     maternal = random.choice(pop)
     paternal = random.choice(pop)
     return maternal, paternal
 
-#function that contains parameters that determine mutation rate
-def mutate_image(x: Painting, rate=0.04, swap=0.5, sigma=1) -> Painting:
+#GENETIC OPERATIONS: function that contains parameters that determine mutation rate
+
+#MUTATION: mutation of a single individual
+def mutate_image(x: Color_Fill, rate=0.04, swap=0.5, sigma=1) -> Color_Fill:
     x.mutate_triangles(rate=rate, swap=swap, sigma=sigma)
     return deepcopy(x)
 
-#function to recombine maternal and paternal genes into a new painting
-def mate(mom: Painting, dad: Painting):
-    child_a, child_b = Painting.mate(mom, dad)
+#CROSSOVER: crossover of two individuals
+def crossover(mom: Color_Fill, dad: Color_Fill):
+    child_a, child_b = Color_Fill.crossover(mom, dad)
 
     return deepcopy(child_a)
 
@@ -42,11 +44,11 @@ def mate(mom: Painting, dad: Painting):
 def console_output(pop, img_template="output%d.png", checkpoint_path="output") -> Population:
     avg_fitness = sum([i.fitness for i in pop.individuals])/len(pop.individuals)
 
-    print("\nCurrent generation %d, best score %f, pop. avg. %f " % (pop.generation,
+    print("\nCurrent generation %d, best fitness %f, pop. avg. %f " % (pop.generation,
                                                                      pop.current_best.fitness,
                                                                      avg_fitness))
     # output conditions for image based on modulus value
-    if pop.generation % 1200 == 0 or pop.generation == 2:
+    if pop.generation % 500 == 0 or pop.generation == 10:
         img = pop.current_best.chromosome.draw()
         img.save(img_template % pop.generation, 'PNG')
 
@@ -59,62 +61,24 @@ def console_output(pop, img_template="output%d.png", checkpoint_path="output") -
 if __name__ == "__main__":
     target_image_path = "./img/banksy.png"
     checkpoint_path = "./banksy/"
-    image_template = os.path.join(checkpoint_path, "drawing_%05d.png")
+    image_template = os.path.join(checkpoint_path, "banksy_%05d.png")
     target_image = Image.open(target_image_path).convert('RGBA')
 #variable values
-    num_triangles = 150
+    num_triangles = 400
     population_size = 20
 
-    pop = Population(chromosomes=[Painting(num_triangles, target_image, background_color=(255, 255, 255)) for _ in range(population_size)],
-                     eval_function=score, maximize=False, concurrent_workers=6)
+    pop = Population(chromosomes=[Color_Fill(num_triangles, target_image, background_color=(255, 255, 255)) for _ in range(population_size)],
+                     eval_function=fitness, maximize=False, concurrent_workers=6)
 #defines early, mid, late and final stages of evolution based on given parameters
+
     stage_one = (Evolution()
-                 .survive(fraction=0.05)
-                 .breed(parent_picker=choose_random, combiner=mate, population_size=population_size)
-                 .mutate(mutate_function=mutate_image, rate=0.20, swap=0.75)
-                 .evaluate(lazy=False)
-                 .callback(console_output,
-                           img_template=image_template,
-                           checkpoint_path=checkpoint_path))
-
-    stage_two = (Evolution()
-               .survive(fraction=0.15)
-               .breed(parent_picker=random_best, combiner=mate, population_size=population_size)
-               .mutate(mutate_function=mutate_image, rate=0.15, swap=0.5)
-               .evaluate(lazy=False)
-               .callback(console_output,
-                         img_template=image_template,
-                         checkpoint_path=checkpoint_path))
-
-    stage_three = (Evolution()
                 .survive(fraction=0.05)
-                .breed(parent_picker=random_best, combiner=mate, population_size=population_size)
+                .breed(parent_picker=selection, combiner=crossover, population_size=population_size)
                 .mutate(mutate_function=mutate_image, rate=0.05, swap=0.25)
                 .evaluate(lazy=False)
                 .callback(console_output,
                           img_template=image_template,
                           checkpoint_path=checkpoint_path))
 
-    stage_four = (Evolution()
-                 .survive(fraction=0.025)
-                 .breed(parent_picker=random_best, combiner=mate, population_size=population_size)
-                 .mutate(mutate_function=mutate_image, rate=0.05, swap=0, sigma=0.15)
-                 .evaluate(lazy=False)
-                 .callback(console_output,
-                           img_template=image_template,
-                           checkpoint_path=checkpoint_path))
-
-    stage_five = (Evolution()
-                  .survive(fraction=0.025)
-                  .breed(parent_picker=random_best, combiner=mate, population_size=population_size)
-                  .mutate(mutate_function=mutate_image, rate=0.03, swap=0, sigma=0.12)
-                  .evaluate(lazy=False)
-                  .callback(console_output,
-                            img_template=image_template,
-                            checkpoint_path=checkpoint_path))
 #pop.evolve parameters set
-   # pop = pop.evolve(stage_one, n=1000)
-   # pop = pop.evolve(stage_two, n=2000)
-    pop = pop.evolve(stage_three, n=10000)
-    #pop = pop.evolve(stage_four, n=12000)
-   # pop = pop.evolve(stage_five, n=5000)
+    pop = pop.evolve(stage_one, n=10000)

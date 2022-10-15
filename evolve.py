@@ -46,11 +46,11 @@ def print_summary(pop, img_template="output%d.png", checkpoint_path="output") ->
                                                                      pop.current_best.fitness,
                                                                      avg_fitness))
     # output image based on modulus value
-    if pop.generation % 500 == 0:
+    if pop.generation % 500 == 0 or pop.generation == 1:
         img = pop.current_best.chromosome.draw()
         img.save(img_template % pop.generation, 'PNG')
 
-    if pop.generation % 50 == 0:
+    if pop.generation % 1000 == 0:
         pop.checkpoint(target=checkpoint_path, method='pickle')
 
     return pop
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     target_image = Image.open(target_image_path).convert('RGBA')
 #variable values
     num_triangles = 150
-    population_size = 200
+    population_size = 20
 
     pop = Population(chromosomes=[Painting(num_triangles, target_image, background_color=(255, 255, 255)) for _ in range(population_size)],
                      eval_function=score, maximize=False, concurrent_workers=6)
@@ -115,6 +115,6 @@ if __name__ == "__main__":
 #pop.evolve parameters set
     pop = pop.evolve(early_evo, n=200)
     pop = pop.evolve(mid_evo, n=300)
-    pop = pop.evolve(late_evo, n=1000)
-    pop = pop.evolve(final_evo, n=1500)
-    pop = pop.evolve(evo_step_5, n=2000)
+    pop = pop.evolve(late_evo, n=4000)
+    pop = pop.evolve(final_evo, n=5000)
+    pop = pop.evolve(evo_step_5, n=6000)

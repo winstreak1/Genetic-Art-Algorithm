@@ -1,9 +1,4 @@
-# Genetic Algorithm - Triangles
-    Peter Mavronicolas
-    Old Dominion University
-    CS 580, Fall 2022
-    Dr. Yaohang Li
-
+# Assignment 2 - Genetic Algorithm
 ## How to Run
 * After cloning this project using Git Desktop, open the project pane at the top left and select 'genetic_algo.py'.
 * At the top right, select the 'green arrow' to compile the code.

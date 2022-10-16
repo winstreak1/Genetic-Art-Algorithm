@@ -6,9 +6,9 @@ class Triangle:
         y = random.randint(0, int(img_height))
 #adjusted triangle range from -50,50 to -10105 to increase evolution
         self.points = [
-            (x + random.randint(-25, 25), y + random.randint(-25, 25)),
-            (x + random.randint(-25, 25), y + random.randint(-25, 25)),
-            (x + random.randint(-25, 25), y + random.randint(-25, 25))]
+            (x + random.randint(-10, 10), y + random.randint(-10, 10)),
+            (x + random.randint(-10, 10), y + random.randint(-10, 10)),
+            (x + random.randint(-10, 10), y + random.randint(-10, 10))]
 #color variation chosen for each point and color fill
         self.color = (
             random.randint(0, 256),
@@ -30,8 +30,8 @@ class Triangle:
         mutation_type = random.choices(mutations, weights=weights, k=1)[0]
 #conditional statements
         if mutation_type == 'shift':
-            x_shift = int(random.randint(-50, 50)*sigma)
-            y_shift = int(random.randint(-50, 50)*sigma)
+            x_shift = int(random.randint(-10, 10)*sigma)
+            y_shift = int(random.randint(-10, 10)*sigma)
             self.points = [(x + x_shift, y + y_shift) for x, y in self.points]
         elif mutation_type == 'point':
             index = random.choice(list(range(len(self.points))))

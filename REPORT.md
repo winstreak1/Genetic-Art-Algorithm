@@ -8,7 +8,7 @@
 ## Images
 ### Original Image
  ![ Original Image](img/banksy.png "Original Image")
-### Four Stages of the Gentic Algorithm
+### Four Stages of the Gentic Algorithm: Generations 1, 1500, 3000, 4500
  ![ The progression of natural selection](img/4images.png "4 Generations")
 ## Code
 
@@ -279,12 +279,18 @@ Initially, I had run the image using Ahmed Gad's Github repository named GARI. T
 ![ Generation 27,000 using GARI](banksy/vangogh_two_27000.png "Generation 27,000 using GARI")
 
 After several initial runs using 150 triangles and a population of 20, stage_three in the evolution settings would result in a compiler error. I attributed this to a small population size. After limiting the stages to stage_one, I was able to increase the number of generations without error. I was also informed by Dr. Li that the image would be created faster by adjusting the number of triangles as opposed to the population size. I increased the number of triangles from 150 to 400 and also modified the range of the size of each random triangle generated from points ranging from (-50,50) to
-(-25,25). This increased precision of triangles more accurately matching the dimensions of the original size by covering a smaller area during mutation.
+(-25,25). This increased precision of triangles more accurately matching the dimensions of the original size by covering a smaller area during mutation. This strategy aligns with the results of circles being applied with GARI. The smaller the random object, the more likely it is to fill a smaller space of similar colored pixels that neighbor the area.
 
+### More, Smaller Triangles: 500 Generations
+![ 500 rounds of 900 triangles with random size (-10,10) ](banksy/tri900pop20_00500.png "More, smaller Triangles")
+### Less, Larger Triangles: 500 Generations
+![ 500 rounds of 150 triangles with random size (-50,50) ](banksy/banksy_00500.png "Less, larger Triangles")
+
+By comparing the two images above, it's quite clear that the shoulders, face, and dark background are much more noticeable in the image with smaller triangles at a rate of 900 per generation as opposed to the larger triangles at a rate of 150 per generation.
 
 
 
 ## Work Cited
-    4dcu-be (Sept. 8, 2021). Genetic-Art-Algorithm [Python]. https://github.com/4dcu-be/Genetic-Art-Algorithm
-    Gad, Ahmed F. GARI [Python], accessed 11/10/2022, https://github.com/ahmedfgad/GARI
-    Stack Overflow, Break long lines in markdown, accessed 11/16/2022, https://stackoverflow.com/questions/19985235/break-long-lines-in-markdown-code
+    1. 4dcu-be (Sept. 8, 2021). Genetic-Art-Algorithm [Python]. https://github.com/4dcu-be/Genetic-Art-Algorithm
+    2. Gad, Ahmed F. GARI [Python], accessed 11/10/2022, https://github.com/ahmedfgad/GARI
+    3. Stack Overflow, Break long lines in markdown, accessed 11/16/2022, https://stackoverflow.com/questions/19985235/break-long-lines-in-markdown-code

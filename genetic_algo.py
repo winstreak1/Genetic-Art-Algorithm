@@ -48,7 +48,7 @@ def console_output(pop, img_template="output%d.png", checkpoint_path="output") -
                                                                      pop.current_best.fitness,
                                                                      avg_fitness))
     # output conditions for image based on modulus value
-    if pop.generation % 500 == 0 or pop.generation == 10:
+    if pop.generation % 500 == 0 or pop.generation == 1:
         img = pop.current_best.chromosome.draw()
         img.save(img_template % pop.generation, 'PNG')
 
@@ -61,10 +61,10 @@ def console_output(pop, img_template="output%d.png", checkpoint_path="output") -
 if __name__ == "__main__":
     target_image_path = "./img/banksy.png"
     checkpoint_path = "./banksy/"
-    image_template = os.path.join(checkpoint_path, "800triangles_%05d.png")
+    image_template = os.path.join(checkpoint_path, "tri900pop20_%05d.png")
     target_image = Image.open(target_image_path).convert('RGBA')
 #variable values
-    num_triangles = 800
+    num_triangles = 900
     population_size = 20
 
     pop = Population(chromosomes=[Color_Fill(num_triangles, target_image, background_color=(255, 255, 255)) for _ in range(population_size)],

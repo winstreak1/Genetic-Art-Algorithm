@@ -279,7 +279,7 @@ Initially, I had run the image using Ahmed Gad's Github repository named GARI. T
 ![ Generation 27,000 using GARI](banksy/vangogh_two_27000.png "Generation 27,000 using GARI")
 
 After several initial runs using 150 triangles and a population of 20, stage_three in the evolution settings would result in a compiler error. I attributed this to a small population size. After limiting the stages to stage_one, I was able to increase the number of generations without error. I was also informed by Dr. Li that the image would be created faster by adjusting the number of triangles as opposed to the population size. I increased the number of triangles from 150 to 400 and also modified the range of the size of each random triangle generated from points ranging from (-50,50) to
-(-25,25). This increased precision of best fitness by covering a smaller area during mutation.
+(-25,25). This increased precision of triangles more accurately matching the dimensions of the original size by covering a smaller area during mutation.
 
 
 

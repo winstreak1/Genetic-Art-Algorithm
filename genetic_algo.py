@@ -61,10 +61,10 @@ def console_output(pop, img_template="output%d.png", checkpoint_path="output") -
 if __name__ == "__main__":
     target_image_path = "./img/banksy.png"
     checkpoint_path = "./banksy/"
-    image_template = os.path.join(checkpoint_path, "tri900pop20_%05d.png")
+    image_template = os.path.join(checkpoint_path, "final_%05d.png")
     target_image = Image.open(target_image_path).convert('RGBA')
 #variable values
-    num_triangles = 900
+    num_triangles = 1000
     population_size = 20
 
     pop = Population(chromosomes=[Color_Fill(num_triangles, target_image, background_color=(255, 255, 255)) for _ in range(population_size)],

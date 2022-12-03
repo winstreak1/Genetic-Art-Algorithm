@@ -273,7 +273,51 @@ class Triangle:
 ```
 
 ## Analysis
-Initially, I had run the image using Ahmed Gad's Github repository named GARI. The results after 27,000 generation proved successful, however pixels were used in place of triangles. Below is the image of the 4,500 generation.
+
+### Parameters
+    Population size: 20
+    No. of Triangles: 1000
+    Crossover rate:
+    Base Mutation rate: 0.04
+    Swap: 0.5
+    Sigma: 1.0
+    Stage One Mutation rate: 0.05
+    Swap: 0.25
+
+### Fitness Function Implementation
+    Test 1:
+    Population size: 1000
+    No. of Triangles: 150
+    Random Triangle Range for each edge: -100,100
+    Generations: 3000
+
+    Test 2:
+    Population size: 1000
+    No. of Triangles: 50
+    Random Triangle Range for each edge: -100,100
+    Generations: 3000
+
+    Test 3:
+    Population size: 2000
+    No. of Triangles: 1000
+    Size of Triangle: 
+    Random Triangle Range for each edge: -10,10
+    Generations: 1000
+
+    Test 4:
+    Population size: 20
+    No. of Triangles: 1000
+    Random Triangle Range for each edge: -50,50
+    Generations: 2500
+
+After consulting with Dr. Li, I was advised to increase the number of triangles after initially making an attempt with 150 
+triangles.Tests 1 and showed little difference from one another as the results from 1000 and 3000 generations showed no difference.
+In Test 2, I decreased the number of triangles which had little to no effect on the outcome of the image. I had performed 
+Test 2 with several evolutions (5) which caused an error when the 3rd evolution (removed from genetic_algo.py) was reached.
+Test 3 also caused an error when the 3rd evolution was reached around 2000 generations. I then removed stage 2-5 of the 
+evolutions, increased the number of triangles to 1000 and drastically decreased the population size to 20. This greatly 
+increased the speed of generations and allowed for more rapid testing. It also resulted in a more detailed image which was
+not reached in Tests 1-3.
 
 ### 27,000 Generations using GARI
 ![ Generation 27,000 using GARI](banksy/vangogh_two_27000.png "Generation 27,000 using GARI")
